@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# Calendar Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A Google Calendar-like application built with React, Redux, and MongoDB.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Interactive calendar with day, week, and month views
+- Create, edit, and delete events
+- Drag and drop events to reschedule
+- Resize events to change duration
+- Categorize events (exercise, eating, work, relax, family, social)
+- Goals and tasks sidebar
+- Drag and drop tasks to create events
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js (v14+)
+- MongoDB (local or Atlas)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation and Setup
 
-### `npm test`
+### 1. Clone the repository
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone <repository-url>
+cd calendar-app
+```
 
-### `npm run build`
+### 2. Install frontend dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 3. Install backend dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd server
+npm install
+cd ..
+```
 
-### `npm run eject`
+### 4. Configure MongoDB
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Make sure MongoDB is running locally or update the `.env` file in the server directory with your MongoDB connection string:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+MONGO_URI=mongodb://localhost:27017/calendar-app
+PORT=5000
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Running the Application
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 1. Start the backend server
 
-## Learn More
+```bash
+cd server
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This will start the backend server on port 5000.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 2. Start the frontend application (in a new terminal)
 
-### Code Splitting
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This will start the React application on port 3000. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### Analyzing the Bundle Size
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. The calendar will display in week view by default
+2. Click on any time slot to create a new event
+3. Fill in the event details (title, category, start/end time)
+4. Drag events to move them to different times/days
+5. Click on an event to edit or delete it
+6. Use the sidebar to select goals and view associated tasks
+7. Drag tasks from the sidebar to the calendar to create events
 
-### Making a Progressive Web App
+## Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Frontend:
+  - React
+  - Redux (with Redux Toolkit)
+  - react-big-calendar
+  - react-datepicker
+  - react-beautiful-dnd
+  - Axios
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Backend:
+  - Express.js
+  - MongoDB
+  - Mongoose
+  - Cors

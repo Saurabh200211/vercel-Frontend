@@ -1,38 +1,419 @@
 .App {
   text-align: center;
+  font-family: Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.calendar-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f9f9f9;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  background-color: #fff;
+  padding: 20px;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.sidebar-section {
+  margin-bottom: 30px;
+}
+
+.sidebar-section h3 {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: left;
+}
+
+.goals-list, .tasks-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.goal-item, .task-item {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.goal-item:hover, .task-item:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.goal-item.selected {
+  background-color: #e3f2fd;
+}
+
+.goal-icon, .task-icon {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+}
+
+/* Calendar Styles */
+.calendar-wrapper {
+  flex: 1;
+  padding: 20px;
+}
+
+.rbc-calendar {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.rbc-header {
+  padding: 10px;
+  background-color: #f5f5f5;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 12px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rbc-header-content {
+  text-align: center;
+}
+
+.rbc-date-cell {
+  text-align: center;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.rbc-time-view {
+  border: 1px solid #e0e0e0;
+}
+
+.rbc-time-header-content {
+  border-left: 1px solid #e0e0e0;
+}
+
+.rbc-time-content {
+  border-top: 1px solid #e0e0e0;
+}
+
+.rbc-time-header-gutter {
+  background-color: #f5f5f5;
+  width: 70px !important;
+}
+
+.rbc-time-gutter {
+  font-size: 12px;
+  color: #666;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.rbc-label {
+  padding: 5px 5px 5px 0;
+}
+
+.rbc-day-slot .rbc-events-container {
+  margin-right: 0;
+}
+
+.rbc-event {
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: none !important;
+  margin: 0 2px;
+  opacity: 0.9;
+}
+
+.rbc-event-label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 12px;
+  display: block;
+}
+
+.rbc-event-content {
+  font-size: 13px;
+  line-height: 1.3;
+  word-break: break-word;
+  color: white;
+  font-weight: 500;
+}
+
+.rbc-day-slot .rbc-event {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.rbc-current-time-indicator {
+  background-color: #e74c3c;
+  height: 2px;
+}
+
+.rbc-toolbar {
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.rbc-toolbar .rbc-toolbar-label {
+  flex-grow: 1;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.rbc-toolbar button {
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 0 2px;
+  background-color: white;
+}
+
+.rbc-toolbar button.rbc-active {
+  background-color: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #f5f5f5;
+}
+
+.rbc-toolbar button.rbc-active:hover {
+  background-color: #d44333;
+}
+
+.rbc-btn-group {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.rbc-row-content {
+  z-index: 0;
+}
+
+/* Event colors based on type */
+.rbc-event.event-exercise {
+  background-color: #2ecc71;
+}
+
+.rbc-event.event-eating {
+  background-color: #e67e22;
+}
+
+.rbc-event.event-work {
+  background-color: #3498db;
+}
+
+.rbc-event.event-relax {
+  background-color: #9b59b6;
+}
+
+.rbc-event.event-family {
+  background-color: #e74c3c;
+}
+
+.rbc-event.event-social {
+  background-color: #f1c40f;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  padding: 0 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+}
+
+.form-group input, .form-group select, .date-picker {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.modal-actions button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.cancel-button {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+.save-button {
+  background-color: #2196f3;
+  border: 1px solid #2196f3;
+  color: white;
+}
+
+.delete-button {
+  background-color: #f44336;
+  border: 1px solid #f44336;
+  color: white;
+}
+
+/* Category colors */
+.category-exercise {
+  background-color: #2ecc71;
+}
+
+.category-eating {
+  background-color: #e67e22;
+}
+
+.category-work {
+  background-color: #3498db;
+}
+
+.category-relax {
+  background-color: #9b59b6;
+}
+
+.category-family {
+  background-color: #e74c3c;
+}
+
+.category-social {
+  background-color: #f1c40f;
+}
+
+/* Goal colors */
+.goal-be-fit {
+  background-color: #e67e22;
+}
+
+.goal-academics {
+  background-color: #3498db;
+}
+
+.goal-learn {
+  background-color: #9b59b6;
+}
+
+.goal-sports {
+  background-color: #2ecc71;
+}
+
+/* Custom day header styles */
+.custom-day-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100%;
+  padding: 5px 0;
 }
 
-.App-link {
-  color: #61dafb;
+.day-name {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 4px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.day-number {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Time slot styling */
+.rbc-timeslot-group {
+  min-height: 60px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.rbc-time-slot {
+  height: 15px;
 }
